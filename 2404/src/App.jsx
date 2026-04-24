@@ -17,10 +17,19 @@ function App() {
   useEffect( () => {
     localStorage.setItem('agenda', JSON.stringify(nomes))
   }, [nomes])
-  function adcionar() {
+  function adicionar() {
     setNomes([...nomes, input]);
     setInput("");
   }
+
+  const [contato, setContatos] = useState([])
+  useEffect(() =>{
+    const dados = localStorage.getItem("agenda");
+
+    if (dados) {
+      setContatos(JSON.parse(dados));
+    }
+  }, [nomes])
 
   return (
     <>
@@ -39,11 +48,19 @@ function App() {
             <input type='text' value = {input}
             onChange={e => setInput(e.target.value)}
             />
-            <button type = 'button' onClick={adcionar}>
-              Adcionar
+            <button type = 'button' onClick={adicionar}>
+              Adicionar
             </button>
           </p>
           <h4>Total Agenda: {totalAgenda} nomes</h4>
+        </div>
+        <div>
+          <h4>Minha Agenda do Local Storage</h4>
+          <ul className="lista">
+            {contato.map((contato, indice) => (
+              <li key={indice}>{indice}. {contato}</li>
+            ))}
+          </ul>
         </div>
       </section>
     </>
