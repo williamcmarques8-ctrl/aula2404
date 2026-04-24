@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 
 function App() {
@@ -12,6 +12,11 @@ function App() {
 
   const [input, setInput] = useState('');
 
+  const totalAgenda = useMemo(() => nomes.length, [nomes]);
+
+  useEffect( () => {
+    localStorage.setItem('agenda', JSON.stringify(nomes))
+  }, [nomes])
   function adcionar() {
     setNomes([...nomes, input]);
     setInput("");
@@ -38,6 +43,7 @@ function App() {
               Adcionar
             </button>
           </p>
+          <h4>Total Agenda: {totalAgenda} nomes</h4>
         </div>
       </section>
     </>
